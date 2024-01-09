@@ -6,19 +6,30 @@
 ### Как установить
 
 - Python3 должен быть установлен
-- Затем используйте `pip` (или `pip3`, еслить есть конфликт с Python2) для установки зависимостей: 
+- Poetry должен быть установлен
+- Затем используйте `poetry` для установки зависимостей: 
     ```
-    pip install -r requirements.txt
+    poetry install
     ```
 
-- Рекомендуется использовать [virtualenv/venv](https://docs.python.org/3/library/venv.html) для изоляции проекта.
+- Рекомендуется использовать виртуальное окружение для изоляции проекта:
+    ```
+    poetry shell
+    ```
+
+- Создать в корне проекта файл **.env**, указать креды из зарегистрированного приложения reddit:
+    ```
+    USER_AGENT=subredits_top
+    CLIENT_ID=dfdfdfdfdjfjdKzJt0eHNw
+    SECRET=ddjdjfdfkjsdffjFJforgiQ
+    ```
 
 
 ### Как пользоваться
 ## Cкрипт парсинга запускается через терминал:
 
 ```
-   python3 get_top_authors.py
+   make run
 ```
 - Топ авторов будет записан в файл **reddit_results.json**:
     ```
@@ -58,24 +69,21 @@
     - Дни за которые брать посты с текущей даты
 
     ```
-    $ python3 get_top_authors.py -h
-    usage: get_top_authors.py [-h] [-n SUBREDDIT_NAME] [-a AUTHORS_AMOUNT] [-l LIMIT] [-d DAYS]
+    $ make run params='-h'
+    python3 redditparser -h
 
-    Set parameters for subreddit parser:
+    Usage: redditparser [OPTIONS]
 
     options:
-    -h, --help            show this help message and exit
-    -n SUBREDDIT_NAME, --subreddit_name SUBREDDIT_NAME
-                            Name of subreddit (default: gaming)
-    -a AUTHORS_AMOUNT, --authors_amount AUTHORS_AMOUNT
-                            Amount of top authors (default: 5)
-    -l LIMIT, --limit LIMIT
-                            Posts limit, 0 for None (default: 10)
-    -d DAYS, --days DAYS  Posts for n days (default: 3)
+       -n      TEXT     Name of subreddit [default: gaming]
+       -a      INTEGER  Amount of top authors [default: 5]
+       -l      INTEGER  Posts limit, 0 for None [default: 10]
+       -d      INTEGER  Posts for n days [default: 3]
+       -h               Show this message and exit.
     ```
         
     ``` 
-    python3 get_top_authors.py -n gaming -l 50
+    make run params='-n gaming -l 50'
     ```
 
 - Скрипт записывает в лог ошибки при выполнении, файл **reddit_parse.log**
